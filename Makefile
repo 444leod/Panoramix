@@ -1,30 +1,45 @@
 ##
 ## EPITECH PROJECT, 2024
-## PROJECT_NAME
+## Panoramix
 ## File description:
 ## Makefile
 ##
 
-NAME = EXECUTABLE_NAME
+GREEN=\033[0;32m
+NC=\033[0m
 
-SRC = ./src/main.c
+INFO = ${GREEN}[INFO]${NC}
 
-OBJ = $(SRC:.asm=.o)
+NAME = panoramix
+
+SRC = main.c \
+	src/panoramix.c
+
+%.o: %.c
+	@$(CC) -c $< -o $@ $(CFLAGS)
+
+OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -I./include -L./lib -lmy
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
+	@make -sC lib
+	@$(CC) -o $(NAME) $(OBJ) $(CFLAGS)
+	@echo -ne "${INFO} Panoramix compiled successfully.${NC}\n"
 
 clean:
-	rm -f $(OBJ)
+	@make -sC lib clean
+	@rm -f $(OBJ)
+	@echo -ne "${INFO} Repository cleaned.${NC}\n"
 
 fclean: clean
-	rm -f $(NAME)
+	@make -sC lib fclean
+	@rm -f $(NAME)
+	@echo -ne "${INFO} Repository fully cleaned.${NC}\n"
 
 re: fclean all
 
@@ -33,6 +48,10 @@ tests_run: all
 run: all
 
 init: install-hooks install-mango
+
+dev: lib
+	@$(CC) -g -o $(NAME) $(SRC) $(CFLAGS) -DDEV_MODE
+	@echo -ne "${INFO} Panoramix compiled successfully in dev mode.${NC}\n"
 
 install-hooks:
 	@cp .githooks/commit-msg .git/hooks/commit-msg
