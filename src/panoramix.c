@@ -7,8 +7,9 @@
 
 #include "panoramix.h"
 #include "debug.h"
+#include "macros.h"
 
-void panoramix(conf_t *conf)
+void panoramix(UNUSED conf_t *conf)
 {
     DEBUG_PRINT("nb_villagers: %d\n", conf->nb_villagers);
     DEBUG_PRINT("pot_size: %d\n", conf->pot_size);
