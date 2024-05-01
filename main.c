@@ -24,7 +24,7 @@ void display_help(void)
         "\tnb_fights\t\tmaximum number of fights a villager will "
         "engage in\n"
         "\tnb_refills\t\tnumber of time the druid will refill the pot\n"
-        "All arguments must be positive integers\n");
+        "All arguments must be > 0\n");
 }
 
 void verify_args(int argc, char *argv[])
@@ -41,7 +41,7 @@ void verify_args(int argc, char *argv[])
         my_exit(84);
     }
     for (u_int8_t i = 1; i < argc; i++) {
-        if (is_positive_number(argv[i]) == false) {
+        if (is_positive_number(argv[i]) == false || atoi(argv[i]) == 0) {
             display_help();
             my_exit(84);
         }

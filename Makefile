@@ -13,7 +13,10 @@ INFO = ${GREEN}[INFO]${NC}
 NAME = panoramix
 
 SRC = main.c \
-	src/panoramix.c
+	src/panoramix.c \
+	src/create_villager.c \
+	src/villager_loop.c \
+	src/logger.c  \
 
 %.o: %.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
