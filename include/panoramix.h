@@ -9,6 +9,7 @@
 
 #include <pthread.h>
 #include <stdbool.h>
+#include <semaphore.h>
 
 typedef struct conf_s {
     int nb_villagers;
@@ -20,8 +21,11 @@ typedef struct conf_s {
 typedef struct druid_s {
     pthread_t thread;
     pthread_mutex_t *mutex;
+    int max_pot_size;
     int pot;
     int nb_refills;
+    bool villagers_ended;
+    bool refill_asked;
 } *druid_t;
 
 typedef struct villager_s {
@@ -29,6 +33,8 @@ typedef struct villager_s {
     pthread_mutex_t *mutex;
     int id;
     bool can_fight;
+    int fights_left;
+    druid_t druid;
 } *villager_t;
 
 typedef struct villagers_s {
@@ -37,6 +43,8 @@ typedef struct villagers_s {
 } *villagers_t;
 
 void panoramix(conf_t *conf);
-villager_t create_villager(int id);
+villager_t create_villager(int id, conf_t *conf, druid_t druid);
 void *villager_loop(void *villager);
 void logger(char *format, ...);
+druid_t create_druid(conf_t *conf);
+void *druid_loop(void *param);

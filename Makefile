@@ -17,6 +17,8 @@ SRC = main.c \
 	src/create_villager.c \
 	src/villager_loop.c \
 	src/logger.c  \
+	src/create_druid.c \
+	src/druid_loop.c \
 
 %.o: %.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
