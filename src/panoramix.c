@@ -32,7 +32,7 @@ void wait_for_villagers(villagers_t villagers)
     }
 }
 
-void panoramix(conf_t *conf)
+void do_panoramix(conf_t *conf)
 {
     druid_t druid = create_druid(conf);
     villagers_t villagers = create_villagers(conf, druid);

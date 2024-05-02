@@ -24,11 +24,11 @@ void *my_malloc(size_t size)
     g_llist_t *llist = get_llist();
 
     if (variable == NULL)
-        my_error("Malloc failed");
+        my_exit_error("Malloc failed");
     memset(variable, 0, size);
     *llist = g_insert_end(variable, *llist);
     if (*llist == NULL)
-        my_error("Malloc failed");
+        my_exit_error("Malloc failed");
     return variable;
 }
 
@@ -84,7 +84,7 @@ void *force_malloc(size_t size)
     void *variable = malloc(size);
 
     if (variable == NULL)
-        my_error("Malloc failed");
+        my_exit_error("Malloc failed");
     return variable;
 }
 

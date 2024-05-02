@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "escaped.h"
 
-void my_error(char *str);
+void my_exit_error(char *str);
 void my_exit(int status);
 char *my_strdup(char const *src);
 char **str_to_word_array(char *str, char *delim);

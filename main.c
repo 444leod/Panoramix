@@ -48,7 +48,7 @@ void verify_args(int argc, char *argv[])
     }
 }
 
-conf_t *getconf(char *argv[])
+conf_t *get_conf(char *argv[])
 {
     conf_t *conf = my_malloc(sizeof(conf_t));
 
@@ -62,7 +62,7 @@ conf_t *getconf(char *argv[])
 int main(UNUSED int argc, UNUSED char *argv[])
 {
     verify_args(argc, argv);
-    panoramix(getconf(argv));
+    do_panoramix(get_conf(argv));
     my_exit(0);
     return 0;
 }

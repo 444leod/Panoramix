@@ -42,7 +42,7 @@ typedef struct villagers_s {
     villager_t villager;
 } *villagers_t;
 
-void panoramix(conf_t *conf);
+void do_panoramix(conf_t *conf);
 villager_t create_villager(int id, conf_t *conf, druid_t druid);
 void *villager_loop(void *villager);
 void logger(char *format, ...);

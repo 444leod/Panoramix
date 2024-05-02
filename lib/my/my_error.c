@@ -14,7 +14,7 @@
  *
  * @param str the error message
 */
-void my_error(char *str)
+void my_exit_error(char *str)
 {
     fprintf(stdout, "Error: %s\n", str);
     my_exit(84);
