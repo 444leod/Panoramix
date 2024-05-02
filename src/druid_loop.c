@@ -14,13 +14,17 @@ void handle_refills(druid_t druid)
     if (druid->pot > 0) {
         druid->pot--;
         druid->refill_asked = false;
-    } else if (druid->nb_refills > 0) {
+        return;
+    }
+    if (druid->nb_refills > 0) {
         druid->refill_asked = false;
         druid->pot = druid->max_pot_size;
         druid->nb_refills--;
         logger("Druid: Ah! Yes, yes, I'm awake !"
             " Working on it! Beware I can only make %d "
             "more refills after this one.\n", druid->nb_refills);
+        if (druid->nb_refills == 0)
+            logger("Druid: I'm out of viscum, I'm going back to... zZz\n");
     }
 }
 
@@ -33,10 +37,8 @@ void *druid_loop(UNUSED void *param)
         if (druid->refill_asked == true) {
             handle_refills(druid);
         }
-        if (druid->pot == 0 && druid->nb_refills == 0) {
-            logger("Druid: I'm out of viscum, I'm going back to... zZz\n");
-            return NULL;
-        }
+        if (druid->pot == 0 && druid->nb_refills == 0)
+            break;
     }
     return NULL;
 }
