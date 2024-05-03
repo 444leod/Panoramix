@@ -8,18 +8,32 @@
 #include "panoramix.h"
 #include <unistd.h>
 
+int get_pot_value(druid_t druid)
+{
+    int pot_value = 0;
+
+    sem_getvalue(&druid->sem, &pot_value);
+    return pot_value;
+}
+
 void ask_for_refill(villager_t villager)
 {
-    logger("Villager %d: I need a drink... I see %d servings left.\n",
-        villager->id, villager->druid->pot);
+    int pot_value;
+
     pthread_mutex_lock(villager->druid->mutex);
-    if (villager->druid->pot == 0) {
+    pot_value = get_pot_value(villager->druid);
+    logger("Villager %d: I need a drink... I see %d servings left.\n",
+        villager->id, pot_value);
+    if (pot_value == 0) {
         logger("Villager %d: Hey Pano wake up! We need more potion.\n",
             villager->id);
         villager->druid->refill_asked = true;
+        pthread_mutex_unlock(villager->druid->mutex);
         while (villager->druid->refill_asked);
+        villager->can_fight = true;
+        return;
     }
-    villager->druid->pot--;
+    sem_wait(&villager->druid->sem);
     pthread_mutex_unlock(villager->druid->mutex);
     villager->can_fight = true;
 }
