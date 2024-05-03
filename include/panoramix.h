@@ -21,6 +21,7 @@ typedef struct conf_s {
 typedef struct druid_s {
     pthread_t thread;
     pthread_mutex_t *mutex;
+    sem_t sem;
     int max_pot_size;
     int pot;
     int nb_refills;
