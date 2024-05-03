@@ -19,6 +19,7 @@ druid_t create_druid(conf_t *conf)
     druid->mutex = &mutex;
     druid->refill_asked = false;
     druid->villagers_ended = false;
+    sem_init(&druid->sem, 0, druid->max_pot_size);
     pthread_create(&druid->thread, NULL, &druid_loop, druid);
     return druid;
 }
