@@ -28,9 +28,9 @@ void ask_for_refill(villager_t villager)
         logger("Villager %d: Hey Pano wake up! We need more potion.\n",
             villager->id);
         villager->druid->refill_asked = true;
-        pthread_mutex_unlock(villager->druid->mutex);
         while (villager->druid->refill_asked);
         villager->can_fight = true;
+        pthread_mutex_unlock(villager->druid->mutex);
         return;
     }
     sem_wait(&villager->druid->sem);
