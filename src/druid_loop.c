@@ -9,30 +9,11 @@
 #include "macros.h"
 #include <unistd.h>
 
-void handle_refills(druid_t druid)
-{
-    if (druid->pot > 0) {
-        druid->pot--;
-        druid->refill_asked = false;
-        return;
-    }
-    if (druid->nb_refills > 0) {
-        druid->refill_asked = false;
-        druid->pot = druid->max_pot_size;
-        druid->nb_refills--;
-        logger("Druid: Ah! Yes, yes, I'm awake !"
-            " Working on it! Beware I can only make %d "
-            "more refills after this one.\n", druid->nb_refills);
-        if (druid->nb_refills == 0)
-            logger("Druid: I'm out of viscum, I'm going back to... zZz\n");
-    }
-}
-
 void refill_pot(druid_t druid)
 {
     druid->nb_refills--;
     druid->pot = druid->max_pot_size;
-    logger("Druid: Ah! Yes, yes, I'm awake !"
+    logger("Druid: Ah! Yes, yes, I'm awake!"
         " Working on it! Beware I can only make %d "
         "more refills after this one.\n", druid->nb_refills);
     if (druid->nb_refills == 0)
@@ -42,7 +23,7 @@ void refill_pot(druid_t druid)
     druid->refill_asked = false;
 }
 
-void *druid_loop(UNUSED void *param)
+void *druid_loop(void *param)
 {
     druid_t druid = (druid_t)param;
 

@@ -29,9 +29,6 @@ void ask_for_refill(villager_t villager)
             villager->id);
         villager->druid->refill_asked = true;
         while (villager->druid->refill_asked);
-        villager->can_fight = true;
-        pthread_mutex_unlock(villager->druid->mutex);
-        return;
     }
     sem_wait(&villager->druid->sem);
     pthread_mutex_unlock(villager->druid->mutex);
